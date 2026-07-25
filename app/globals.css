@@ -1,0 +1,508 @@
+/* ============================================================
+   Vision Technology Lab — IIT Tirupati
+   Global Stylesheet
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Custom Properties ──────────────────────────────────── */
+:root {
+  /* Brand Colours */
+  --color-brand:        #3068f5;
+  --color-brand-dark:   #1d4ed8;
+  --color-teal:         #17a3ad;
+  --color-gold:         #f59e0b;
+  --color-navy-deep:    #0c1124;
+  --color-navy:         #1e2a52;
+  --color-navy-mid:     #141f50;
+
+  /* Glass surfaces */
+  --glass-bg:           rgba(255, 255, 255, 0.07);
+  --glass-bg-hover:     rgba(255, 255, 255, 0.12);
+  --glass-border:       rgba(255, 255, 255, 0.12);
+  --glass-border-hover: rgba(255, 255, 255, 0.22);
+  --glass-shadow:       0 8px 32px rgba(0, 0, 0, 0.30);
+  --glass-shadow-lg:    0 24px 64px rgba(0, 0, 0, 0.40);
+
+  /* Navbar */
+  --navbar-height: 72px;
+
+  /* Transitions */
+  --transition-fast:   150ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-base:   250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-slow:   400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-spring: 350ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Scroll */
+  scroll-behavior: smooth;
+}
+
+/* ─── Base Reset & Global Styles ─────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    background-color: var(--color-navy-deep);
+    color: #e2e8f0;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Heading Font */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Outfit", "Inter", system-ui, sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: rgba(48, 104, 245, 0.35);
+    color: #fff;
+  }
+
+  /* Focus Ring */
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Anchor reset */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Images */
+  img, video {
+    max-width: 100%;
+    display: block;
+  }
+
+  /* Input reset */
+  input, textarea, select, button {
+    font-family: inherit;
+  }
+}
+
+/* ─── Custom Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-navy-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(48, 104, 245, 0.45);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(48, 104, 245, 0.70);
+}
+
+/* ─── Glassmorphism Component Classes ────────────────────────── */
+@layer components {
+
+  /* Base glass panel */
+  .glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition:
+      background var(--transition-base),
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .glass-panel:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-shadow-lg);
+  }
+
+  /* Strong glass (more opaque, for modals / navbar) */
+  .glass-strong {
+    background: rgba(14, 22, 58, 0.80);
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  /* Navbar specific glass */
+  .glass-navbar {
+    background: rgba(12, 17, 36, 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.30);
+  }
+
+  /* Light glass card */
+  .glass-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255,255,255,0.08);
+    transition: all var(--transition-base);
+  }
+
+  .glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255,255,255,0.12);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+
+  /* Tinted glass — brand accent */
+  .glass-brand {
+    background: linear-gradient(135deg, rgba(48,104,245,0.15) 0%, rgba(23,163,173,0.08) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(48, 104, 245, 0.25);
+    box-shadow: 0 8px 32px rgba(48, 104, 245, 0.15);
+  }
+
+  /* Section container */
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Section padding */
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  /* ─── Gradient Text ─────────────────────────────────────────── */
+  .gradient-text {
+    background: linear-gradient(135deg, #3068f5 0%, #17a3ad 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-gold {
+    background: linear-gradient(135deg, #f59e0b 0%, #ffbb1e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-warm {
+    background: linear-gradient(135deg, #3068f5 0%, #f59e0b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ─── Buttons ───────────────────────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white;
+    background: linear-gradient(135deg, #3068f5 0%, #1d4ed8 100%);
+    box-shadow: 0 4px 16px rgba(48, 104, 245, 0.35);
+    transition: all var(--transition-base);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(48, 104, 245, 0.50);
+    filter: brightness(1.08);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: #e2e8f0;
+    backdrop-filter: blur(12px);
+    transition: all var(--transition-base);
+  }
+
+  .btn-secondary:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.20);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-slate-300;
+    transition: all var(--transition-fast);
+  }
+
+  .btn-ghost:hover {
+    @apply text-white bg-white/10;
+  }
+
+  /* ─── Tag / Badge ───────────────────────────────────────────── */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  .badge-brand {
+    @apply badge;
+    background: rgba(48, 104, 245, 0.18);
+    color: #93b4ff;
+    border: 1px solid rgba(48, 104, 245, 0.30);
+  }
+
+  .badge-teal {
+    @apply badge;
+    background: rgba(23, 163, 173, 0.18);
+    color: #5eead4;
+    border: 1px solid rgba(23, 163, 173, 0.30);
+  }
+
+  .badge-gold {
+    @apply badge;
+    background: rgba(245, 158, 11, 0.18);
+    color: #fcd34d;
+    border: 1px solid rgba(245, 158, 11, 0.30);
+  }
+
+  /* ─── Section Divider ───────────────────────────────────────── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(48,104,245,0.30) 50%, transparent 100%);
+    @apply my-16;
+  }
+
+  /* ─── Input Fields ──────────────────────────────────────────── */
+  .input-glass {
+    @apply w-full px-4 py-3 rounded-xl text-white placeholder-slate-500;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(8px);
+    transition: all var(--transition-base);
+  }
+
+  .input-glass:focus {
+    outline: none;
+    border-color: rgba(48, 104, 245, 0.60);
+    background: rgba(255, 255, 255, 0.09);
+    box-shadow: 0 0 0 3px rgba(48, 104, 245, 0.15);
+  }
+
+  /* ─── Loading Shimmer ───────────────────────────────────────── */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.04) 0%,
+      rgba(255,255,255,0.10) 50%,
+      rgba(255,255,255,0.04) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* ─── Noise Texture overlay ─────────────────────────────────── */
+  .noise-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    border-radius: inherit;
+  }
+
+  /* ─── Glowing border ────────────────────────────────────────── */
+  .glow-border {
+    position: relative;
+  }
+
+  .glow-border::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(48,104,245,0.50), rgba(23,163,173,0.50));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  .glow-border:hover::after {
+    opacity: 1;
+  }
+
+  /* ─── Animated underline link ───────────────────────────────── */
+  .link-underline {
+    position: relative;
+    color: #93b4ff;
+  }
+
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 100%;
+    height: 1.5px;
+    background: linear-gradient(90deg, #3068f5, #17a3ad);
+    transition: right var(--transition-base);
+    border-radius: 999px;
+  }
+
+  .link-underline:hover::after {
+    right: 0;
+  }
+
+  /* ─── Scroll Reveal Base (JS controlled) ────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-100 { transition-delay: 100ms; }
+  .reveal-delay-200 { transition-delay: 200ms; }
+  .reveal-delay-300 { transition-delay: 300ms; }
+  .reveal-delay-400 { transition-delay: 400ms; }
+  .reveal-delay-500 { transition-delay: 500ms; }
+
+  /* ─── Page Layout Utilities ─────────────────────────────────── */
+  .page-pt {
+    padding-top: var(--navbar-height);
+  }
+
+  /* ─── Admin Form Label ───────────────────────────────────────── */
+  .label-admin {
+    @apply block text-[11px] font-bold uppercase tracking-widest text-slate-400;
+  }
+
+  /* ─── Admin glass-strong hover ───────────────────────────────── */
+  .glass-strong:hover {
+    background: rgba(14, 22, 58, 0.85);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+}
+
+
+/* ─── Utility Overrides ──────────────────────────────────────── */
+@layer utilities {
+  /* Perspective for 3D transforms */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  /* Text balance */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Smooth gradient animation */
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 6s ease infinite;
+  }
+
+  /* Hide scrollbar but keep scroll */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Glassmorphism quick variants */
+  .glass-xs {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .glass-sm {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.09);
+  }
+
+  .glass-md {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .glass-lg {
+    background: rgba(255,255,255,0.10);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+}
+
+/* ─── Carousel / Swiper overrides ────────────────────────────── */
+.hero-carousel .carousel-dot {
+  width: 6px;
+  height: 6px;
+  background: rgba(255,255,255,0.30);
+  border-radius: 999px;
+  transition: all var(--transition-base);
+}
+
+.hero-carousel .carousel-dot.active {
+  width: 24px;
+  background: var(--color-brand);
+}
+
+/* ─── Typography Plugin prose overrides ──────────────────────── */
+.prose-dark {
+  --tw-prose-body:        #cbd5e1;
+  --tw-prose-headings:    #f1f5f9;
+  --tw-prose-links:       #93b4ff;
+  --tw-prose-bold:        #f1f5f9;
+  --tw-prose-code:        #7dd3fc;
+  --tw-prose-pre-bg:      rgba(255,255,255,0.05);
+  --tw-prose-quotes:      #94a3b8;
+  --tw-prose-quote-borders: rgba(48,104,245,0.50);
+}
+
+/* ─── Print Styles ───────────────────────────────────────────── */
+@media print {
+  .glass-panel,
+  .glass-card,
+  .glass-strong {
+    background: #fff !important;
+    backdrop-filter: none !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    color: #000 !important;
+  }
+}
